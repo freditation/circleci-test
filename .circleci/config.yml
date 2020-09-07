@@ -8,12 +8,25 @@ jobs:
     executor: python/default
     steps:
       - checkout
+
       - run:
-          command: pip install -r requirements.txt
+          command: |
+            . venv/bin/activate
+            pip install -r requirements.txt
           name: Install Requirements
+          
       - run:
-          command: pytest src
+          command: |
+            . venv/bin/activate
+            mkdir test-results
+            pytest --junitxml=test-results/junit.xmlytest
           name: Test
+
+      - store_test_results:
+        path: test-results
+
+      - store_artifacts:
+        path: test-results
 
 workflows:
   main:

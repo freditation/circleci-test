@@ -11,13 +11,18 @@ jobs:
 
       - run:
           command: |
-            . venv/bin/activate
+            python3 -m venv .venv
+          name: Virtual Environment
+
+      - run:
+          command: |
+            . .venv/bin/activate
             pip install -r requirements.txt
           name: Install Requirements
           
       - run:
           command: |
-            . venv/bin/activate
+            . .venv/bin/activate
             mkdir test-results
             pytest --junitxml=test-results/junit.xmlytest
           name: Test
